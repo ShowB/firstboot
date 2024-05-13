@@ -18,7 +18,7 @@ public class HelloController {
         this.firstbootTestRepository = firstbootTestRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("/who-is-poor")
     public String hello() {
         Random random = new SecureRandom();
 
