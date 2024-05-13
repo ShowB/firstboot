@@ -17,7 +17,7 @@ spring:
         default_batch_fetch_size: 100
 
   datasource:
-    url: jdbc:mariadb://localhost:13306/firstboot
+    url: jdbc:mariadb://3.35.211.126:13306/firstboot
     username: showb
     password: Firstboot!23
     hikari:
