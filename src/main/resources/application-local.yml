@@ -1,0 +1,25 @@
+server:
+  port: 50031
+
+spring:
+  main.allow-bean-definition-overriding: true
+  jpa:
+    generate-ddl: false
+    database: MYSQL
+    # Show or not log for each sql query
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL57Dialect # 추가 해준 부분
+    hibernate:
+      ddl-auto: none
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+
+  datasource:
+    url: jdbc:mariadb://54.180.237.91:13306/firstboot
+    username: showb
+    password: Firstboot!23
+    hikari:
+      maximum-pool-size: 2
+      connection-test-query: select 1
