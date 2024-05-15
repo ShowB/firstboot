@@ -1,11 +1,10 @@
 package com.showb.firstboot.helloworld.entities;
 
+import com.showb.firstboot.helloworld.enums.PersonalCode;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "firstboot_test")
 public class FirstbootTestEntity {
@@ -20,6 +19,19 @@ public class FirstbootTestEntity {
     @Column(name = "value", length = 300)
     private String value;
 
+
+    private FirstbootTestEntity(String code, String value) {
+        this.code = code;
+        this.value = value;
+    }
+
+    protected FirstbootTestEntity() {
+
+    }
+
+    public static FirstbootTestEntity from(PersonalCode personalCode) {
+        return new FirstbootTestEntity(personalCode.name(), personalCode.getHumanName());
+    }
 
     @Override
     public String toString() {
