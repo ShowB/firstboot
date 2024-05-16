@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @RestController
 public class HelloController {
@@ -41,5 +43,13 @@ public class HelloController {
 
         FirstbootTestEntity entity = FirstbootTestEntity.from(personalCode);
         firstbootTestRepository.save(entity);
+
+    }
+
+    @GetMapping("/poor/list")
+    public Map<String, Long> getPoors() {
+        return firstbootTestRepository.findAll()
+                .stream()
+                .collect(Collectors.groupingBy(FirstbootTestEntity::getValue, Collectors.counting()));
     }
 }
