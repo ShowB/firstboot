@@ -1,6 +1,6 @@
 package com.showb.firstboot.helloworld.entities;
 
-import com.showb.firstboot.helloworld.enums.PersonalCode;
+import com.showb.firstboot.users.enums.PersonalCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 

@@ -1,8 +1,6 @@
-package com.showb.firstboot.helloworld.enums;
+package com.showb.firstboot.users.enums;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import java.util.Map;
@@ -11,7 +9,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.NONE)
 public enum PersonalCode {
     SHOWB("이창섭"),
     SUZY("노아현"),

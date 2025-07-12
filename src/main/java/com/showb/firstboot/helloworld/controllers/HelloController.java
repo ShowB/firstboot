@@ -1,8 +1,8 @@
-package com.showb.firstboot.helloworld.controller;
+package com.showb.firstboot.helloworld.controllers;
 
 import com.showb.firstboot.helloworld.entities.FirstbootTestEntity;
-import com.showb.firstboot.helloworld.enums.PersonalCode;
 import com.showb.firstboot.helloworld.repositories.FirstbootTestRepository;
+import com.showb.firstboot.users.enums.PersonalCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
