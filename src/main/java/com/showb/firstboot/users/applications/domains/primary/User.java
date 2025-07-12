@@ -23,9 +23,9 @@ public record User(
         String token,
         LocalDateTime lastActionAt,
         String createdBy,
-        LocalDateTime createdDate,
+        LocalDateTime createdAt,
         String updatedBy,
-        LocalDateTime updatedDate
+        LocalDateTime updatedAt
 ) {
     public static User create(String name, String loginId, String plainPassword) {
         return User.builder()

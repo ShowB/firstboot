@@ -1,6 +1,7 @@
 package com.showb.firstboot.users.applications.service;
 
 
+import com.showb.firstboot.exceptions.FirstBootException;
 import com.showb.firstboot.users.applications.domains.UserCreate;
 import com.showb.firstboot.users.applications.domains.primary.User;
 import com.showb.firstboot.users.applications.port.in.UserManageUseCase;
@@ -18,6 +19,13 @@ public class UserManageService implements UserManageUseCase {
 
     @Override
     public void createUser(UserCreate userCreate) {
+        boolean duplicatedLoginId = userManagePort.findByLoginId(userCreate.loginId())
+                .isPresent();
+
+        if (duplicatedLoginId) {
+            throw new FirstBootException("이미 사용중인 ID 입니다.");
+        }
+
         User user = userCreate.create();
         userManagePort.createUser(user);
     }

@@ -2,6 +2,7 @@ package com.showb.firstboot.users.entites;
 
 import com.showb.firstboot.common.entities.AuditingEntity;
 import com.showb.firstboot.users.applications.domains.primary.User;
+import com.showb.firstboot.users.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,7 +34,8 @@ public class UserEntity extends AuditingEntity {
     private String password;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @Column(name = "fail_count")
     private Integer failCount;
@@ -68,7 +70,7 @@ public class UserEntity extends AuditingEntity {
             String name,
             String loginId,
             String password,
-            String status,
+            UserStatus status,
             Integer failCount,
             Boolean pwInit,
             LocalDateTime lastAccessedAt,
@@ -99,26 +101,49 @@ public class UserEntity extends AuditingEntity {
         this.lastActionAt = lastActionAt;
     }
 
-    public static UserEntity from(User user) {
+    public static UserEntity from(User from) {
         return UserEntity.builder()
-                .id(user.id())
-                .companyId(user.companyId())
-                .name(user.name())
-                .loginId(user.loginId())
-                .password(user.password())
-                .status(user.status().name())
-                .failCount(user.failCount())
-                .pwInit(user.pwInit())
-                .lastAccessedAt(user.lastAccessedAt())
-                .lastPwChangedAt(user.lastPwChangedAt())
-                .memo(user.memo())
-                .del(user.del())
-                .token(user.token())
-                .lastActionAt(user.lastActionAt())
-                .createdBy(user.createdBy())
-                .createdAt(user.createdDate())
-                .updatedBy(user.updatedBy())
-                .updatedAt(user.updatedDate())
+                .id(from.id())
+                .companyId(from.companyId())
+                .name(from.name())
+                .loginId(from.loginId())
+                .password(from.password())
+                .status(from.status())
+                .failCount(from.failCount())
+                .pwInit(from.pwInit())
+                .lastAccessedAt(from.lastAccessedAt())
+                .lastPwChangedAt(from.lastPwChangedAt())
+                .memo(from.memo())
+                .del(from.del())
+                .token(from.token())
+                .lastActionAt(from.lastActionAt())
+                .createdBy(from.createdBy())
+                .createdAt(from.createdAt())
+                .updatedBy(from.updatedBy())
+                .updatedAt(from.updatedAt())
+                .build();
+    }
+
+    public User toDomain() {
+        return User.builder()
+                .id(this.id)
+                .companyId(this.companyId)
+                .name(this.name)
+                .loginId(this.loginId)
+                .password(this.password)
+                .status(this.status)
+                .failCount(this.failCount)
+                .pwInit(this.pwInit)
+                .lastAccessedAt(this.lastAccessedAt)
+                .lastPwChangedAt(this.lastPwChangedAt)
+                .memo(this.memo)
+                .del(this.del)
+                .token(this.token)
+                .lastActionAt(this.lastActionAt)
+                .createdBy(super.getCreatedBy())
+                .createdAt(super.getCreatedAt())
+                .updatedBy(super.getUpdatedBy())
+                .updatedAt(super.getUpdatedAt())
                 .build();
     }
 }
