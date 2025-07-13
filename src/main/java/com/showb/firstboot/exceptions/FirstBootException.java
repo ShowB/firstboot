@@ -1,19 +1,30 @@
 package com.showb.firstboot.exceptions;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+
+import java.util.Objects;
+
 public class FirstBootException extends RuntimeException {
-    public FirstBootException(String message) {
-        super(message);
+    @Getter
+    private final transient ExceptionType exceptionType;
+
+
+    public FirstBootException(@NotNull ExceptionType exceptionType, @NotNull Object... messageParams) {
+        super(generateParameterizedMessage(exceptionType.getMessage(), messageParams));
+        this.exceptionType = exceptionType;
     }
 
-    public FirstBootException(String message, Throwable cause) {
-        super(message, cause);
-    }
 
-    public FirstBootException(Throwable cause) {
-        super(cause);
-    }
+    private static String generateParameterizedMessage(String template, Object[] params) {
+        if (Objects.isNull(params)) {
+            return template;
+        }
 
-    public FirstBootException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+        for (Object param : params) {
+            template = template.replaceFirst("\\{}", param.toString());
+        }
+
+        return template;
     }
 }

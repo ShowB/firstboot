@@ -1,6 +1,6 @@
 package com.showb.firstboot.configs.exception;
 
-import com.showb.firstboot.common.adapters.in.dtos.ErrorResponse;
+import com.showb.firstboot.business.common.adapters.in.dtos.ErrorResponse;
 import com.showb.firstboot.exceptions.FirstBootException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
