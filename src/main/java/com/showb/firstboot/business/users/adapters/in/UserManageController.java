@@ -1,6 +1,6 @@
 package com.showb.firstboot.business.users.adapters.in;
 
-import com.showb.firstboot.business.users.adapters.in.dtos.UserCreateDTO;
+import com.showb.firstboot.business.users.adapters.in.dto.request.UserCreateRequestDTO;
 import com.showb.firstboot.business.users.applications.port.in.UserManageUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +19,8 @@ public class UserManageController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createUser(@RequestBody UserCreateDTO userCreateDTO) {
-        userManageUseCase.createUser(userCreateDTO.toDomain());
+    public ResponseEntity<Void> createUser(@RequestBody UserCreateRequestDTO userCreateRequestDTO) {
+        userManageUseCase.createUser(userCreateRequestDTO.toDomain());
 
         return ResponseEntity.ok()
                 .build();
