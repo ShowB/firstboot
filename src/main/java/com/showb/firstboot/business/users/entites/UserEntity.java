@@ -55,12 +55,6 @@ public class UserEntity extends AuditingEntity {
     @Column(name = "del")
     private Boolean del = false;
 
-    @Column(name = "token")
-    private String token;
-
-    @Column(name = "last_action_at")
-    private LocalDateTime lastActionAt;
-
 
     @SuppressWarnings({"unused", "java:S107"})
     @Builder
@@ -77,8 +71,6 @@ public class UserEntity extends AuditingEntity {
             LocalDateTime lastPwChangedAt,
             String memo,
             Boolean del,
-            String token,
-            LocalDateTime lastActionAt,
             String createdBy,
             LocalDateTime createdAt,
             String updatedBy,
@@ -97,8 +89,6 @@ public class UserEntity extends AuditingEntity {
         this.lastPwChangedAt = lastPwChangedAt;
         this.memo = memo;
         this.del = del;
-        this.token = token;
-        this.lastActionAt = lastActionAt;
     }
 
     public static UserEntity from(User from) {
@@ -115,8 +105,6 @@ public class UserEntity extends AuditingEntity {
                 .lastPwChangedAt(from.lastPwChangedAt())
                 .memo(from.memo())
                 .del(from.del())
-                .token(from.token())
-                .lastActionAt(from.lastActionAt())
                 .createdBy(from.createdBy())
                 .createdAt(from.createdAt())
                 .updatedBy(from.updatedBy())
@@ -138,8 +126,6 @@ public class UserEntity extends AuditingEntity {
                 .lastPwChangedAt(this.lastPwChangedAt)
                 .memo(this.memo)
                 .del(this.del)
-                .token(this.token)
-                .lastActionAt(this.lastActionAt)
                 .createdBy(super.getCreatedBy())
                 .createdAt(super.getCreatedAt())
                 .updatedBy(super.getUpdatedBy())

@@ -20,8 +20,6 @@ public record User(
         LocalDateTime lastPwChangedAt,
         String memo,
         Boolean del,
-        String token,
-        LocalDateTime lastActionAt,
         String createdBy,
         LocalDateTime createdAt,
         String updatedBy,
@@ -38,15 +36,6 @@ public record User(
                 .lastAccessedAt(LocalDateTime.now())
                 .lastPwChangedAt(LocalDateTime.now())
                 .del(false)
-                .lastActionAt(LocalDateTime.now())
                 .build();
-    }
-
-    public boolean isLocked() {
-        return this.status == UserStatus.LOCK;
-    }
-
-    public boolean isStopped() {
-        return this.status == UserStatus.STOP;
     }
 }
