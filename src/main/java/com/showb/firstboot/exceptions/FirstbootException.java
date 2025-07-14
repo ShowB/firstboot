@@ -5,12 +5,12 @@ import lombok.Getter;
 
 import java.util.Objects;
 
-public class FirstBootException extends RuntimeException {
+public class FirstbootException extends RuntimeException {
     @Getter
     private final transient ExceptionType exceptionType;
 
 
-    public FirstBootException(@NotNull ExceptionType exceptionType, @NotNull Object... messageParams) {
+    public FirstbootException(@NotNull ExceptionType exceptionType, @NotNull Object... messageParams) {
         super(generateParameterizedMessage(exceptionType.getMessage(), messageParams));
         this.exceptionType = exceptionType;
     }

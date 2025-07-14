@@ -1,4 +1,4 @@
-package com.showb.firstboot.business.users.applications.service.login.facade;
+package com.showb.firstboot.business.users.applications.service.login.components;
 
 import com.showb.firstboot.business.users.applications.domains.login.LoginUser;
 import com.showb.firstboot.business.users.applications.domains.primary.User;

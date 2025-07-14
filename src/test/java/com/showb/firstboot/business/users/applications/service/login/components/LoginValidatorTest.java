@@ -1,4 +1,4 @@
-package com.showb.firstboot.business.users.applications.service.login.facade;
+package com.showb.firstboot.business.users.applications.service.login.components;
 
 import com.showb.firstboot.business.users.applications.domains.login.LoginRequest;
 import com.showb.firstboot.business.users.applications.domains.login.LoginUser;
@@ -15,7 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
