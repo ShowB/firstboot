@@ -1,7 +1,7 @@
 package com.showb.firstboot.utils.encrypt;
 
 import com.showb.firstboot.business.common.exceptions.CommonExceptionType;
-import com.showb.firstboot.exceptions.FirstBootException;
+import com.showb.firstboot.exceptions.FirstbootException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +22,7 @@ public class HashingUtils {
             digest.update(str.getBytes(StandardCharsets.UTF_8));
             return String.format("%040x", new BigInteger(1, digest.digest()));
         } catch (NoSuchAlgorithmException e) {
-            throw new FirstBootException(CommonExceptionType.FAILED_TO_HASHING, e.getMessage());
+            throw new FirstbootException(CommonExceptionType.FAILED_TO_HASHING, e.getMessage());
         }
     }
 }

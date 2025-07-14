@@ -5,7 +5,7 @@ import com.showb.firstboot.business.users.applications.domains.login.LoginUser;
 import com.showb.firstboot.business.users.applications.domains.primary.User;
 import com.showb.firstboot.business.users.applications.port.out.UserPort;
 import com.showb.firstboot.business.users.exceptions.LoginExceptionType;
-import com.showb.firstboot.exceptions.FirstBootException;
+import com.showb.firstboot.exceptions.FirstbootException;
 import com.showb.firstboot.utils.encrypt.HashingUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,8 +38,8 @@ class LoginValidatorTest {
         when(userPort.findByLoginId("loginId"))
                 .thenReturn(Optional.empty());
 
-        FirstBootException exception = assertThrows(
-                FirstBootException.class,
+        FirstbootException exception = assertThrows(
+                FirstbootException.class,
                 () -> loginValidator.getValidatedLoginUser(loginRequest)
         );
 
@@ -66,8 +65,8 @@ class LoginValidatorTest {
                         )
                 );
 
-        FirstBootException exception = assertThrows(
-                FirstBootException.class,
+        FirstbootException exception = assertThrows(
+                FirstbootException.class,
                 () -> loginValidator.getValidatedLoginUser(loginRequest)
         );
 

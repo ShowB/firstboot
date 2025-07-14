@@ -4,7 +4,7 @@ import com.showb.firstboot.business.users.applications.domains.login.LoginReques
 import com.showb.firstboot.business.users.applications.domains.login.LoginUser;
 import com.showb.firstboot.business.users.applications.port.out.UserPort;
 import com.showb.firstboot.business.users.exceptions.LoginExceptionType;
-import com.showb.firstboot.exceptions.FirstBootException;
+import com.showb.firstboot.exceptions.FirstbootException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,10 +19,10 @@ public class LoginValidator {
     public LoginUser getValidatedLoginUser(LoginRequest loginRequest) {
         LoginUser loginUser = userPort.findByLoginId(loginRequest.loginId())
                 .map(LoginUser::from)
-                .orElseThrow(() -> new FirstBootException(LoginExceptionType.FAILED_TO_LOGIN));
+                .orElseThrow(() -> new FirstbootException(LoginExceptionType.FAILED_TO_LOGIN));
 
         if (loginUser.nonMatchedPassword(loginRequest.password())) {
-            throw new FirstBootException(LoginExceptionType.FAILED_TO_LOGIN);
+            throw new FirstbootException(LoginExceptionType.FAILED_TO_LOGIN);
         }
 
         return loginUser;
