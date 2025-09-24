@@ -21,7 +21,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> createUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         LoginResponse response = loginUseCase.login(loginRequestDTO.toDomain());
         LoginResponseDTO responseDTO = LoginResponseDTO.from(response);
 
