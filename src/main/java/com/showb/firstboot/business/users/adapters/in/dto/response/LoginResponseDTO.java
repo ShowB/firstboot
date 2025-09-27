@@ -8,13 +8,15 @@ import lombok.Builder;
 public record LoginResponseDTO(
         boolean success,
         UserStatus status,
-        String token
+        String accessToken,
+        String refreshToken
 ) {
     public static LoginResponseDTO from(LoginResponse from) {
         return LoginResponseDTO.builder()
                 .success(from.success())
                 .status(from.status())
-                .token(from.token())
+                .accessToken(from.accessToken())
+                .refreshToken(from.refreshToken())
                 .build();
     }
 }

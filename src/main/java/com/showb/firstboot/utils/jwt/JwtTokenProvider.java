@@ -7,7 +7,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -15,21 +14,31 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
-@PropertySource("classpath:common-${spring.profiles.active}.properties")
 public class JwtTokenProvider {
     private final String secretKey;
-    private final long timeout;
+    private final long accessTokenExpirationSeconds;
+    private final long refreshTokenExpirationSeconds;
 
 
     public JwtTokenProvider(
-            @Value("${token.secret:FIRSTBOOT_SECRET_KEY}") String secretKey,
-            @Value("${token.timeout:600}") long timeout
+            @Value("${jwt.secret:FIRSTBOOT_SECRET_KEY}") String secretKey,
+            @Value("${jwt.access-token-expiration-seconds:600}") long accessTokenExpirationSeconds,
+            @Value("${jwt.refresh-token-expiration-seconds:3600}") long refreshTokenExpirationSeconds
     ) {
         this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-        this.timeout = timeout;
+        this.accessTokenExpirationSeconds = accessTokenExpirationSeconds;
+        this.refreshTokenExpirationSeconds = refreshTokenExpirationSeconds;
     }
 
-    public String createToken(LoginUser user) {
+    public String createAccessToken(LoginUser user) {
+        return createToken(user, accessTokenExpirationSeconds);
+    }
+
+    public String createRefreshToken(LoginUser user) {
+        return createToken(user, refreshTokenExpirationSeconds);
+    }
+
+    private String createToken(LoginUser user, long expirationSeconds) {
         Claims claims = Jwts.claims();
 
         claims.put("loginId", user.loginId());
@@ -37,7 +46,7 @@ public class JwtTokenProvider {
         claims.put("companyId", user.companyId());
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + timeout * 1000);
+        Date validity = new Date(now.getTime() + expirationSeconds * 1000);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -47,7 +56,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String getLoginId(String token) {
+    public String getLoginIdFromToken(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("loginId", String.class);
     }
 

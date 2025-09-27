@@ -7,13 +7,15 @@ import lombok.Builder;
 public record LoginResponse(
         boolean success,
         UserStatus status,
-        String token
+        String accessToken,
+        String refreshToken
 ) {
-    public static LoginResponse success(String token) {
+    public static LoginResponse success(String accessToken, String refreshToken) {
         return LoginResponse.builder()
                 .success(true)
                 .status(UserStatus.NORMAL)
-                .token(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }

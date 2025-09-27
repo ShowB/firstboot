@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 public record UserToken(
         Long id,
         Long userId,
-        String token,
+        String accessToken,
+        String refreshToken,
         LocalDateTime lastRefreshedAt,
         String createdBy,
         LocalDateTime createdAt,
@@ -21,10 +22,15 @@ public record UserToken(
                 .build();
     }
 
-    public UserToken refreshToken(String newToken) {
+    public UserToken updateTokens(String newAccessToken, String newRefreshToken) {
         return this.toBuilder()
-                .token(newToken)
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
                 .lastRefreshedAt(LocalDateTime.now())
                 .build();
+    }
+
+    public boolean isValidForRefresh(String accessToken, String refreshToken) {
+        return this.accessToken().equals(accessToken) && this.refreshToken().equals(refreshToken);
     }
 }

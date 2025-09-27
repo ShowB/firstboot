@@ -19,18 +19,20 @@ class UserTokenTest {
 
     @Test
     @Order(2)
-    @DisplayName("refreshToken 메서드는 token 과 lastRefreshedAt 값을 현재 시각으로 설정하여 새로운 자기 자신을 반환해야 한다.")
-    void refreshToken() {
+    @DisplayName("updateTokens 메서드는 accessToken, refreshToken 과 lastRefreshedAt 값을 현재 시각으로 설정하여 새로운 자기 자신을 반환해야 한다.")
+    void updateTokens() {
         UserToken userToken = UserToken.builder()
-                .token("abcde")
-                .lastRefreshedAt(LocalDateTime.now()
-                        .minusDays(1L))
+                .accessToken("oldAccess")
+                .refreshToken("oldRefresh")
+                .lastRefreshedAt(LocalDateTime.now().minusDays(1L))
                 .build();
 
-        UserToken result = userToken.refreshToken("newToken");
+        UserToken result = userToken.updateTokens("newAccess", "newRefresh");
 
-        assertNotEquals(userToken.token(), result.token());
+        assertNotEquals(userToken.accessToken(), result.accessToken());
+        assertNotEquals(userToken.refreshToken(), result.refreshToken());
         assertTrue(result.lastRefreshedAt().isAfter(userToken.lastRefreshedAt()));
-        assertEquals("newToken", result.token());
+        assertEquals("newAccess", result.accessToken());
+        assertEquals("newRefresh", result.refreshToken());
     }
 }

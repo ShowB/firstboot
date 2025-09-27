@@ -1,32 +1,28 @@
-
 package com.showb.firstboot.business.users.applications.service.login.components;
 
 import com.showb.firstboot.business.users.applications.domains.login.LoginUser;
-import com.showb.firstboot.business.users.applications.domains.primary.UserToken;
-import com.showb.firstboot.business.users.applications.port.out.UserTokenPort;
 import com.showb.firstboot.utils.jwt.JwtTokenProvider;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserTokenGenerator {
-    private final UserTokenPort userTokenPort;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Builder
+    public record GeneratedToken(String accessToken, String refreshToken) {}
 
-    public UserTokenGenerator(UserTokenPort userTokenPort, JwtTokenProvider jwtTokenProvider) {
-        this.userTokenPort = userTokenPort;
+    public UserTokenGenerator(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    public String generateToken(LoginUser loginUser) {
-        String token = jwtTokenProvider.createToken(loginUser);
+    public GeneratedToken generateTokens(LoginUser loginUser) {
+        String accessToken = jwtTokenProvider.createAccessToken(loginUser);
+        String refreshToken = jwtTokenProvider.createRefreshToken(loginUser);
 
-        UserToken userToken = userTokenPort.findByUserId(loginUser.userId())
-                .orElse(UserToken.create(loginUser.userId()));
-
-        userToken = userToken.refreshToken(token);
-        userTokenPort.saveUserToken(userToken);
-
-        return token;
+        return GeneratedToken.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

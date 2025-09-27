@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -28,8 +27,8 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserTokenRepository userTokenRepository;
     private final UserRepository userRepository;
+    private final UserTokenRepository userTokenRepository;
 
 
     @Override
@@ -40,20 +39,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         String token = jwtTokenProvider.resolveToken(request);
 
-        if (!StringUtils.hasText(token)) {
-            return;
-        }
-
-        if (this.jwtTokenProvider.validateToken(token)) {
-            String loginId = this.jwtTokenProvider.getLoginId(token);
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            String loginId = this.jwtTokenProvider.getLoginIdFromToken(token);
 
             UserEntity userEntity = this.userRepository.findByLoginId(loginId)
-                    .orElseThrow(() -> new FirstbootException(LoginExceptionType.FAILED_TO_LOGIN));
+                    .orElseThrow(() -> new FirstbootException(LoginExceptionType.USER_NOT_FOUND));
 
             UserTokenEntity userTokenEntity = this.userTokenRepository.findByUserId(userEntity.getId())
                     .orElseThrow(() -> new FirstbootException(LoginExceptionType.FAILED_TO_LOGIN));
 
-            if (token.equals(userTokenEntity.getToken())) {
+            if (token.equals(userTokenEntity.getAccessToken())) {
                 this.setAuthentication(userEntity);
             }
         }

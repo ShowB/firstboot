@@ -1,3 +1,7 @@
+jwt:
+  access-token-expiration-seconds: 600
+  refresh-token-expiration-seconds: 3600
+
 server:
   port: 50031
 

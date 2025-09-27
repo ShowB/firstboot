@@ -23,8 +23,11 @@ public class UserTokenEntity extends AuditingEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "token")
-    private String token;
+    @Column(name = "access_token")
+    private String accessToken;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     @Column(name = "last_refreshed_at")
     private LocalDateTime lastRefreshedAt;
@@ -35,7 +38,8 @@ public class UserTokenEntity extends AuditingEntity {
     public UserTokenEntity(
             Long id,
             Long userId,
-            String token,
+            String accessToken,
+            String refreshToken,
             LocalDateTime lastRefreshedAt,
             String createdBy,
             LocalDateTime createdAt,
@@ -45,7 +49,8 @@ public class UserTokenEntity extends AuditingEntity {
         super(createdBy, createdAt, updatedBy, updatedAt);
         this.id = id;
         this.userId = userId;
-        this.token = token;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.lastRefreshedAt = lastRefreshedAt;
     }
 
@@ -53,7 +58,8 @@ public class UserTokenEntity extends AuditingEntity {
         return UserTokenEntity.builder()
                 .id(from.id())
                 .userId(from.userId())
-                .token(from.token())
+                .accessToken(from.accessToken())
+                .refreshToken(from.refreshToken())
                 .lastRefreshedAt(from.lastRefreshedAt())
                 .createdBy(from.createdBy())
                 .createdAt(from.createdAt())
@@ -66,7 +72,8 @@ public class UserTokenEntity extends AuditingEntity {
         return UserToken.builder()
                 .id(this.id)
                 .userId(this.userId)
-                .token(this.token)
+                .accessToken(this.accessToken)
+                .refreshToken(this.refreshToken)
                 .lastRefreshedAt(this.lastRefreshedAt)
                 .createdBy(super.getCreatedBy())
                 .createdAt(super.getCreatedAt())
