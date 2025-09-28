@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .orElseThrow(() -> new FirstbootException(LoginExceptionType.USER_NOT_FOUND));
 
             UserTokenEntity userTokenEntity = this.userTokenRepository.findByUserId(userEntity.getId())
-                    .orElseThrow(() -> new FirstbootException(LoginExceptionType.FAILED_TO_LOGIN));
+                    .orElseThrow(() -> new FirstbootException(LoginExceptionType.USER_TOKEN_NOT_FOUND));
 
             if (token.equals(userTokenEntity.getAccessToken())) {
                 this.setAuthentication(userEntity);
